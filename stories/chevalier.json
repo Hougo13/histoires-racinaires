@@ -1,0 +1,82 @@
+{
+  "root": "Intro1",
+  "title": "Chevalier",
+  "nodes": {
+    "Intro1": {
+      "text": "Au coeur du lointain continent des elfes, la cité-état d'Alma était nichée entre de hautes collines. Demeurée neutre depuis des siècles, les chevaliers errants s'y faisaient un nom. Des royaumes en guerre décidaient du vainqueur dans des duels mortels. Il arrivait que les almatis présentent leurs propres chevaliers. Vous êtes l'un deux, le Chevalier Sabrétoile. Vous avez grandi dans l'arène et gagné votre titre en tournoi. Votre sabre ne vous quittait jamais et vous tiriez orgueil de toujours gagner avec cette seule arme. Vous faisiez la fierté de votre famille, mais surtout de votre Dame. Mais, par orgueil toujours, vous combattiez sans cesse des adversaires plus forts, parfois soûl. Un jour que vous étiez aviné, vous vous êtes présenté devant un vétéran, et avez rapidement perdu conscience. Vous vous réveillez le lendemain matin, la main gauche tranchée. Heureusement, votre main d'épée, la droite, est toujours là, mais votre honneur est en miettes. Votre Dame est aussi belle que sévère. Elle vous regarde sans compassion et vous dit : \"Tu dois te laver de cette honte. Va t'en chasser le Dragon dans la Forêt Profonde. Si tu reviens sans preuve de cet exploit, tu me perdras\"",
+      "choices": [
+        {
+          "target": "Intro2",
+          "text": "Suivant"
+        }
+      ]
+    },
+    "Intro2": {
+      "text": "Vous n'avez d'autre choix que de vous enfoncer, seul, dans la Forêt Profonde. En pleine forme et désespéré, vous êtes désormais à des lieux de toute habitation, sur une route que seuls les bandits et les voyageurs chevronnés empruntent encore. Vous vous rapprochez du territoire supposé du dragon. Après des heures sans croiser âme qui vive, vous voilà face à trois nouvelles routes. L'une est entretenue et continue droit vers le coeur de la forêt. Celle de droite est pavée, à l'abandon, peut-être une ancienne voie de caravanes. A votre gauche, une sente de gibier, martelée d'empreintes d'animaux.",
+      "choices": [
+        {
+          "target": "sentier gibier",
+          "text": "Le sentier"
+        },
+        {
+          "target": "chemin entretenu",
+          "text": "Le chemin entretenu"
+        },
+        {
+          "target": "route pavée",
+          "text": "La route pavée"
+        }
+      ]
+    },
+    "sentier gibier": {
+      "text": "Vous avancez entre les arbres, le sentier est étroit. A un moment, il se divise en deux. A gauche, vous constatez des traces de sang. Du bout des doigts, vous constatez qu'il est frais. Vous pouvez bifurquer à gauche, et suivre le sang, ou continuer tout droit.",
+      "choices": [
+        {
+          "target": "trace de sang",
+          "text": "Suivre les traces de sang"
+        },
+        {
+          "target": "continuer",
+          "text": "Continuer tout droit"
+        }
+      ]
+    },
+    "trace de sang": {
+      "text": "Plus vous avancez, et plus le sang est épais et noir. Un gros animal semble en avoir traîné un autre au sol. Vous êtes paré à dégainer votre sabre à tout instant, car le dragon est peut-être proche...",
+      "choices": [
+        {
+          "target": "carcasse",
+          "text": "Continuer"
+        }
+      ]
+    },
+    "carcasse": {
+      "text": "Vous tombez sur une carcasse de cerf. Elle semble avoir été abandonnée là, à moitié dévorée. La puanteur n'est pas encore trop forte, la carcasse est aussi fraîche que votre angoisse naissante. Vous n'espériez pas tomber si vite sur les traces du dragon.",
+      "choices": [
+        {
+          "target": "charnier",
+          "text": "Continuer"
+        }
+      ]
+    },
+    "charnier": {
+      "text": "Vous arrivez dans une clairière. Partout votre regard se porte sur des morceaux d'armures, des ossements blanchis ou non. La puanteur est forte. Le sol a été piétiné par le dragon. Sa tanière est face à vous.",
+      "choices": [
+        {
+          "target": "tanière",
+          "text": "S'avancer vers la grotte"
+        },
+        {
+          "target": "clairière",
+          "text": "clairire ici"
+        }
+      ]
+    },
+    "tanière": {
+      "text": "Le sabre au clair, vous vous avancez à pas comptés jusque l'entrée. Un vent fétide souffle vers l'extérieur. Soudain une gueule énorme surgit de l'ombre. Des crocs immenses vous arrachent la peau du cou et vous mourrez avant de vous écrouler au sol. "
+    },
+    "clairière": {
+      "text": ""
+    }
+  }
+}
