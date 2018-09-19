@@ -34,6 +34,6 @@ module.exports = {
       title: "Output Management",
       template: "./src/index.html"
     }),
-    new CopyWebpackPlugin([{ from: "stories/*.json", to: "stories" }])
+    new CopyWebpackPlugin(["stories/*.json"])
   ]
 };
