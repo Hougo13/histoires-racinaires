@@ -1,74 +1,55 @@
 import { html } from "hybrids";
 import { Spectre } from "../Spectre";
-import { connectStore } from "./StoreProvider";
-import { editNodeText, editNodeId } from "../Store";
-import { router } from "./Router";
+import StNodeEditBasic from "./NodeEditBasic";
+import StNodeEditChoices from "./NodeEditChoices";
 
-const nodeIdInput = (host, event) => {
-  host.cache = { ...host.cache, nodeId: event.target.value };
-};
-
-const nodeTextInput = (host, event) => {
-  host.cache = { ...host.cache, nodeText: event.target.value };
-};
-
-const applyChanges = (host, event) => {
-  event.preventDefault();
-  const form = new FormData(event.target);
-
-  if (host.nodeTextChanged) {
-    host.store.dispatch(editNodeText(host.nodeId, form.get("nodeText")));
-  }
-
-  if (host.nodeIdChanged) {
-    const newNodeId = form.get("nodeId");
-    host.router.navigate(`/edit/${newNodeId}`, { quitely: true });
-    host.store.dispatch(editNodeId(host.nodeId, newNodeId));
-  }
+const switchTab = tab => (host, event) => {
+  host.tab = tab;
 };
 
 export default {
-  ...connectStore({}),
-  router,
   nodeId: "",
-  node: {
-    get: (host, value) => value || {},
-    set: (host, value) => {
-      console.log("set node");
-      return value;
+  node: {},
+  tab: "basic",
+  render: ({ tab, node, nodeId }) => {
+    console.log("render edit node", node, nodeId);
+
+    let content;
+    switch (tab) {
+      case "basic":
+        content = html`
+          <st-node-edit-basic nodeText="${
+            node.text
+          }" nodeId="${nodeId}"></st-node-edit-basic>
+        `.define({ StNodeEditBasic });
+        break;
+      case "choices":
+        content = html`
+          <st-node-edit-choices></st-node-edit-choices>  
+        `.define({ StNodeEditChoices });
+        break;
+      default:
+        content = html``;
     }
-  },
-  cache: {
-    get: ({ nodeId, node }, value) =>
-      value || { nodeId: nodeId, nodeText: node.text },
-    set: (host, value, lastValue) => value
-  },
-  nodeIdChanged: ({ cache, nodeId }) => cache.nodeId != nodeId,
-  nodeTextChanged: ({ cache, node }) => cache.nodeText != node.text,
-  nodeChanged: ({ nodeIdChanged, nodeTextChanged }) =>
-    nodeIdChanged || nodeTextChanged,
-  render: ({ node, nodeId, nodeChanged }) => {
-    console.log("render edit node", node, nodeId, nodeChanged);
+
     return html`
 			${Spectre}
 			<style>
-
+        :host > div {
+          margin: 2rem;
+        }
 			</style>
-			<form id="form" onsubmit="${applyChanges}">
-				<div class="form-group">
-					<label class="form-label" for="input-node-id">Id</label>
-					<input 	class="form-input" type="text" id="input-node-id" placeholder="Enter an id" name="nodeId" value="${nodeId}" oninput="${nodeIdInput}">
-				</div>
-				<div class="form-group">
-					<label class="form-label" for="input-node-text">Text</label>
-					<textarea 
-						class="form-input" id="input-node-text"	placeholder="Enter the text" name="nodeText" rows="10" oninput="${nodeTextInput}"
-					>${node.text}</textarea>
-				</div>
-				<button type="submit" class="btn btn-primary ${
-          nodeChanged ? "" : "disabled"
-        }">Apply changes</button>
-			</form>
+      <ul class="tab tab-block">
+        <li class="tab-item ${tab == "basic" ? "active" : ""}">
+          <a class="c-hand" onclick="${switchTab("basic")}">Basic</a>
+        </li>
+        <li class="tab-item ${tab == "choices" ? "active" : ""}">
+          <a class="c-hand" onclick="${switchTab("choices")}">Choices</a>
+        </li>
+      </ul>
+      <div>
+        ${content}
+      </div>
 		`;
   }
 };
