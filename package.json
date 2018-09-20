@@ -5,7 +5,8 @@
   "main": "StoryApp.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "build:prod": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
