@@ -12,6 +12,11 @@ export default {
   keepQuery: false,
   render: () =>
     html`
+        <style>
+            ::slotted(*) {
+                cursor: pointer;
+            }
+        </style>
         <a onclick="${clickHandler}">
             <slot></slot>
         </a>

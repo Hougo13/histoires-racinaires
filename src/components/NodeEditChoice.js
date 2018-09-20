@@ -3,6 +3,7 @@ import { Spectre } from "../Spectre";
 import StEditNodeChoiceModal from "./NodeEditChoiceModal";
 import { store, connectStore } from "./StoreProvider";
 import { deleteNodeChoice } from "../Store";
+import StRouterLink from "./RouterLink.js";
 
 const openModal = host => {
   host.edition = true;
@@ -27,7 +28,9 @@ export default {
 			${Spectre}
 			<div class="tile">
 				<div class="tile-content">
-					<p class="tile-title">${choice.target}</p>
+					<st-router-link href="${`/edit/${choice.target}`}">
+						<p class="tile-title">${choice.target}</p>
+					</st-router-link>
 					<p class="tile-subtitle text-gray">${choice.text}</p>
 				</div>
 				<div class="tile-action">
@@ -36,5 +39,5 @@ export default {
 				</div>
 			</div>
 			<st-edit-node-choice-modal open="${edition}" choice="${choice}" onclosemodal="${closeModal}"></st-edit-node-choice-modal>
-  	`.define({ StEditNodeChoiceModal })
+  	`.define({ StEditNodeChoiceModal, StRouterLink })
 };

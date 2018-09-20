@@ -1,8 +1,13 @@
 import { html } from "hybrids";
-import { Spectre } from "../Spectre";
+import { Spectre, SpectreIcons } from "../Spectre";
 import { store } from "./StoreProvider";
 import { router } from "./Router";
-import { editNodeText, editNodeId } from "../Store";
+import { editNodeText, editNodeId, deleteNode } from "../Store";
+
+const deleteNodeHandler = ({ router, store, nodeId }) => {
+  store.dispatch(deleteNode(nodeId));
+  router.navigate("/edit");
+};
 
 const nodeIdInputHandler = (host, event) => {
   host.inputNodeId = event.target.value;
@@ -46,9 +51,7 @@ export default {
     nodeChanged
   }) => html`
 		${Spectre}
-		<style>
-
-		</style>
+    ${SpectreIcons}
 		<form id="form" onsubmit="${applyChanges}">
 			<div class="form-group">
 				<label class="form-label" for="input-node-id">Id</label>
@@ -79,6 +82,7 @@ export default {
         "btn-primary": true,
         disabled: !nodeChanged
       }}">Apply changes</button>
+      <button class="btn float-right" onclick="${deleteNodeHandler}"><i class="icon icon-delete"></i> Delete</button>
 		</form>
 	`
 };

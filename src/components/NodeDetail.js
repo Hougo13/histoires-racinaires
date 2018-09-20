@@ -1,6 +1,7 @@
 import StRouterLink from "./RouterLink.js";
 import { html, dispatch } from "hybrids";
 import { Spectre, SpectreIcons } from "../Spectre.js";
+
 const onExit = (host, event) => {
   dispatch(host, "exit");
 };
@@ -59,11 +60,11 @@ export default {
             <i class="icon icon-cross"></i>
         </button>
         <h4>${nodeId}</h4>
-        <st-router-link href="${`/edit/${nodeId}`}">
-            <button class="btn btn-action btn-sm">
-                <i class="icon icon-edit"></i>
-            </button>     
-        </st-router-link>
+				<st-router-link href="${`/edit/${nodeId}`}">
+						<button class="btn btn-action btn-sm">
+								<i class="icon icon-edit"></i>
+						</button>     
+				</st-router-link> 
 
     </div>
     <div id="scroll">

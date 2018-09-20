@@ -114,6 +114,27 @@ const reducer = (state = { page: "home", storyStatus: "pending" }, action) => {
         story: { ...state.story, nodes: { ...state.story.nodes, ...editNodes } }
       };
     }
+    case "DELETE_NODE": {
+      return {
+        ...state,
+        story: {
+          ...state.story,
+          nodes: Object.keys(state.story.nodes).reduce((acc, nodeId) => {
+            if (nodeId != action.value) {
+              acc[nodeId] = {
+                ...state.story.nodes[nodeId],
+                choices: state.story.nodes[nodeId].choices.reduce(
+                  (nc, choice) =>
+                    choice.target == action.value ? nc : [...nc, choice],
+                  []
+                )
+              };
+            }
+            return acc;
+          }, {})
+        }
+      };
+    }
     default:
       return state;
   }
@@ -199,5 +220,10 @@ export const deleteNodeChoice = (nodeId, choiceTarget) => ({
 export const createNode = (nodeId, value = { text: "empty", choices: [] }) => ({
   type: "CREATE_NODE",
   nodeId,
+  value
+});
+
+export const deleteNode = value => ({
+  type: "DELETE_NODE",
   value
 });
