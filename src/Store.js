@@ -2,9 +2,10 @@ import { createStore } from "redux";
 
 const reducer = (state = { page: "home", storyStatus: "pending" }, action) => {
   switch (action.type) {
-    case "SET_PAGE":
+    case "SET_PAGE": {
       return { ...state, page: action.value };
-    case "FETCH_STORY":
+    }
+    case "FETCH_STORY": {
       const newState = {
         ...state,
         storyStatus: action.status
@@ -15,13 +16,14 @@ const reducer = (state = { page: "home", storyStatus: "pending" }, action) => {
         newState.error = action.error;
       }
       return newState;
+    }
     case "SELECT_NODE": {
       return { ...state, selectedNode: action.value };
     }
-    case "EDIT_STORY_TITLE":
+    case "EDIT_STORY_TITLE": {
       return { ...state, story: { ...state.story, title: action.value } };
-
-    case "EDIT_NODE_TEXT":
+    }
+    case "EDIT_NODE_TEXT": {
       const editNodes = {};
       editNodes[action.nodeId] = {
         ...state.story.nodes[action.nodeId],
@@ -31,7 +33,8 @@ const reducer = (state = { page: "home", storyStatus: "pending" }, action) => {
         ...state,
         story: { ...state.story, nodes: { ...state.story.nodes, ...editNodes } }
       };
-    case "EDIT_NODE_ID":
+    }
+    case "EDIT_NODE_ID": {
       const nodes = {};
       Object.keys(state.story.nodes).forEach(nodeId => {
         if (nodeId != action.oldValue) {
@@ -57,6 +60,60 @@ const reducer = (state = { page: "home", storyStatus: "pending" }, action) => {
             : state.selectedNode,
         story: { ...state.story, nodes }
       };
+    }
+    case "EDIT_NODE_CHOICE": {
+      const editNodes = {};
+      editNodes[action.nodeId] = {
+        ...state.story.nodes[action.nodeId],
+        choices: state.story.nodes[action.nodeId].choices.map(
+          choice =>
+            choice.target == action.choiceTarget ? action.value : choice
+        )
+      };
+      return {
+        ...state,
+        story: { ...state.story, nodes: { ...state.story.nodes, ...editNodes } }
+      };
+    }
+    case "CREATE_NODE": {
+      if (state.story.nodes[action.nodeId]) {
+        return { ...state };
+      }
+
+      const editNodes = {};
+      editNodes[action.nodeId] = action.value;
+
+      return {
+        ...state,
+        story: { ...state.story, nodes: { ...state.story.nodes, ...editNodes } }
+      };
+    }
+    case "CREATE_NODE_CHOICE": {
+      const editNodes = {};
+      editNodes[action.nodeId] = {
+        ...state.story.nodes[action.nodeId],
+        choices: [...state.story.nodes[action.nodeId].choices, action.value]
+      };
+      return {
+        ...state,
+        story: { ...state.story, nodes: { ...state.story.nodes, ...editNodes } }
+      };
+    }
+    case "DELETE_NODE_CHOICE": {
+      const editNodes = {};
+      editNodes[action.nodeId] = {
+        ...state.story.nodes[action.nodeId],
+        choices: state.story.nodes[action.nodeId].choices.reduce(
+          (acc, choice) =>
+            choice.target == action.choiceTarget ? acc : [...acc, choice],
+          []
+        )
+      };
+      return {
+        ...state,
+        story: { ...state.story, nodes: { ...state.story.nodes, ...editNodes } }
+      };
+    }
     default:
       return state;
   }
@@ -116,6 +173,31 @@ export const editNodeId = (oldValue, newValue) => ({
 
 export const editNodeText = (nodeId, value) => ({
   type: "EDIT_NODE_TEXT",
+  nodeId,
+  value
+});
+
+export const editNodeChoice = (nodeId, choiceTarget, value) => ({
+  type: "EDIT_NODE_CHOICE",
+  nodeId,
+  choiceTarget,
+  value
+});
+
+export const createNodeChoice = (nodeId, value = { text: "empty" }) => ({
+  type: "CREATE_NODE_CHOICE",
+  nodeId,
+  value
+});
+
+export const deleteNodeChoice = (nodeId, choiceTarget) => ({
+  type: "DELETE_NODE_CHOICE",
+  nodeId,
+  choiceTarget
+});
+
+export const createNode = (nodeId, value = { text: "empty", choices: [] }) => ({
+  type: "CREATE_NODE",
   nodeId,
   value
 });

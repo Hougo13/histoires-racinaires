@@ -11,28 +11,8 @@ export default {
   nodeId: "",
   node: {},
   tab: "basic",
-  render: ({ tab, node, nodeId }) => {
-    console.log("render edit node", node, nodeId);
-
-    let content;
-    switch (tab) {
-      case "basic":
-        content = html`
-          <st-node-edit-basic nodeText="${
-            node.text
-          }" nodeId="${nodeId}"></st-node-edit-basic>
-        `.define({ StNodeEditBasic });
-        break;
-      case "choices":
-        content = html`
-          <st-node-edit-choices></st-node-edit-choices>  
-        `.define({ StNodeEditChoices });
-        break;
-      default:
-        content = html``;
-    }
-
-    return html`
+  render: ({ tab, node, nodeId }) =>
+    html`
 			${Spectre}
 			<style>
         :host > div {
@@ -48,8 +28,12 @@ export default {
         </li>
       </ul>
       <div>
-        ${content}
+        ${tab == "basic" &&
+          html`<st-node-edit-basic nodeText="${
+            node.text
+          }" nodeId="${nodeId}"></st-node-edit-basic>`}
+        ${tab == "choices" &&
+          html`<st-node-edit-choices></st-node-edit-choices>`}
       </div>
-		`;
-  }
+		`.define({ StNodeEditBasic, StNodeEditChoices })
 };
