@@ -1,9 +1,8 @@
-import { parent } from "hybrids";
+import { parent, html } from "hybrids";
 import Navigo from "navigo";
 import { connectStore } from "./StoreProvider";
 import { setPage, selectNode, resetNodeSelection } from "../Store";
 import { fetchStory } from "../Actions";
-import { html } from "hybrids/lib/html";
 
 const routeHandler = host => () => {
   host.route = host.router.lastRouteResolved();
@@ -91,7 +90,9 @@ const Router = {
       }
     });
 
-    return html`<slot></slot>`;
+    return html`
+      <slot></slot>
+    `;
   }
 };
 

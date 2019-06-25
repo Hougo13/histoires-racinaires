@@ -1,4 +1,4 @@
-import { html, dispatch } from "hybrids";
+import { html, dispatch, property } from "hybrids";
 import { Spectre } from "../Spectre";
 import { store, connectStore } from "./StoreProvider";
 import {
@@ -47,7 +47,7 @@ export default {
     nodes: state => state.story.nodes
   }),
   open: false,
-  choice: {},
+  choice: property({}),
   render: ({ open, choice }) => html`
 		${Spectre}
 		<div class="${{ modal: true, active: open }}" id="modal-id">
@@ -62,8 +62,8 @@ export default {
 						<div class="content">
 							<div class="form-group">
 								<label class="form-label" for="input-target">Target</label>
-								<input class="form-input" type="text" id="input-target" name="target" value="${choice.target ||
-                  ""}">
+                <input class="form-input" type="text" id="input-target" name="target" 
+                  value="${choice.target || ""}">
 							</div>
 							<div class="form-group">
 								<label class="form-label" for="input-text">Text</label>

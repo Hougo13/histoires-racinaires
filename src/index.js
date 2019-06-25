@@ -2,7 +2,6 @@ import { html, define } from "hybrids";
 import StStoreProvider from "./components/StoreProvider.js";
 import StPages from "./components/Pages.js";
 import StRouter from "./components/Router.js";
-import "hybrids/shim";
 
 const StoryApp = {
   render: () =>

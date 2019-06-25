@@ -50,22 +50,22 @@ export default {
     inputNodeText,
     nodeChanged
   }) => html`
-		${Spectre}
-    ${SpectreIcons}
-		<form id="form" onsubmit="${applyChanges}">
-			<div class="form-group">
-				<label class="form-label" for="input-node-id">Id</label>
-				<input
+    ${Spectre} ${SpectreIcons}
+    <form id="form" onsubmit="${applyChanges}">
+      <div class="form-group">
+        <label class="form-label" for="input-node-id">Id</label>
+        <input
           class="form-input"
           type="text"
           id="input-node-id"
           placeholder="Enter an id"
           name="nodeId"
           oninput="${nodeIdInputHandler}"
-          value="${inputNodeId || nodeId}">
-			</div>
-			<div class="form-group">
-				<label class="form-label" for="input-node-text">Text</label>
+          value="${inputNodeId || nodeId}"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="input-node-text">Text</label>
         <textarea
           class="form-input"
           id="input-node-text"
@@ -74,15 +74,22 @@ export default {
           rows="20"
           oninput="${nodeTextInputHandler}"
         >
-          ${inputNodeText || nodeText}
-        </textarea>
-			</div>
-			<button type="submit" class="${{
-        btn: true,
-        "btn-primary": true,
-        disabled: !nodeChanged
-      }}">Apply changes</button>
-      <button class="btn float-right" onclick="${deleteNodeHandler}"><i class="icon icon-delete"></i> Delete</button>
-		</form>
-	`
+${inputNodeText || nodeText}</textarea
+        >
+      </div>
+      <button
+        type="submit"
+        class="${{
+          btn: true,
+          "btn-primary": true,
+          disabled: !nodeChanged
+        }}"
+      >
+        Apply changes
+      </button>
+      <button class="btn float-right" onclick="${deleteNodeHandler}">
+        <i class="icon icon-delete"></i> Delete
+      </button>
+    </form>
+  `
 };

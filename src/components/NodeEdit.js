@@ -1,4 +1,4 @@
-import { html } from "hybrids";
+import { html, property } from "hybrids";
 import { Spectre } from "../Spectre";
 import StNodeEditBasic from "./NodeEditBasic";
 import StNodeEditChoices from "./NodeEditChoices";
@@ -9,16 +9,16 @@ const switchTab = tab => (host, event) => {
 
 export default {
   nodeId: "",
-  node: {},
+  node: property({}),
   tab: "basic",
   render: ({ tab, node, nodeId }) =>
     html`
-			${Spectre}
-			<style>
+      ${Spectre}
+      <style>
         :host > div {
           margin: 2rem;
         }
-			</style>
+      </style>
       <ul class="tab tab-block">
         <li class="tab-item ${tab == "basic" ? "active" : ""}">
           <a class="c-hand" onclick="${switchTab("basic")}">Basic</a>
@@ -29,11 +29,16 @@ export default {
       </ul>
       <div>
         ${tab == "basic" &&
-          html`<st-node-edit-basic nodeText="${
-            node.text
-          }" nodeId="${nodeId}"></st-node-edit-basic>`}
+          html`
+            <st-node-edit-basic
+              nodeText="${node.text}"
+              nodeId="${nodeId}"
+            ></st-node-edit-basic>
+          `}
         ${tab == "choices" &&
-          html`<st-node-edit-choices></st-node-edit-choices>`}
+          html`
+            <st-node-edit-choices></st-node-edit-choices>
+          `}
       </div>
-		`.define({ StNodeEditBasic, StNodeEditChoices })
+    `.define({ StNodeEditBasic, StNodeEditChoices })
 };

@@ -51,6 +51,9 @@ export default {
           container: host.cyElement,
           elements: nodesToElements(host.story.nodes),
           boxSelectionEnabled: false,
+          maxZoom: 3,
+          minZoom: 0.5,
+          wheelSensitivity: 0.5,
           layout: {
             name: "dagre",
             nodeDimensionsIncludeLabels: true

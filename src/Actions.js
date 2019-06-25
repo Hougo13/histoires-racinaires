@@ -29,3 +29,9 @@ export const loadStory = (file, store) => {
 
   reader.readAsText(file);
 };
+
+export const createStory = async store => {
+  store.dispatch(fetchStoryStart());
+  const story = await parseStory({}, true);
+  store.dispatch(fetchStorySuccess(story));
+};

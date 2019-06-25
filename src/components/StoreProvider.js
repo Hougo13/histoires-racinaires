@@ -1,8 +1,8 @@
-import { parent } from "hybrids";
+import { parent, property } from "hybrids";
 import Store from "../Store";
 
 const StoreProvider = {
-  store: Store,
+  store: property(Store),
   dispatch: ({ store }) => (...args) => store.dispatch(...args),
   dispatchTask: ({ store }) => (...args) =>
     setTimout(() => store.dispatch(...args)),

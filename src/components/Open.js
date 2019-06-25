@@ -1,7 +1,7 @@
 import { html } from "hybrids";
 import StErrorToast from "./ErrorToast";
 import { Spectre, SpectreIcons } from "../Spectre";
-import { loadStory, fetchStory } from "../Actions";
+import { loadStory, fetchStory, createStory } from "../Actions";
 import { connectStore } from "./StoreProvider";
 import SButton from "./spectre/Button";
 import SFormGroup from "./spectre/FormGroup";
@@ -19,6 +19,13 @@ const openStory = ({ store, storyStatus }, event) => {
     } else if (file.size > 0) {
       loadStory(file, store);
     }
+  }
+};
+
+const onCreateStory = ({ store, storyStatus }, event) => {
+  event.preventDefault();
+  if (storyStatus != "loading") {
+    createStory(store);
   }
 };
 
@@ -42,13 +49,14 @@ export default {
           margin-right: 10px;
           margin-bottom: 30px !important;
         }
-        form > button, {
+        form > .button-container {
           margin-top: 30px;
           margin-left: auto;
           margin-right: auto;
-          width: 50px;
-        }        
-
+        }
+        form > .button-container > button {
+          min-width: 50px;
+        }
         form > .form-group {
           box-sizing: border-box;
         }
@@ -57,27 +65,40 @@ export default {
       <form onsubmit="${openStory}">
         <div class="form-group">
           <label for="url-input">From a url</label>
-          <input 
-            class="form-input" 
-            type="url" id="url-input" 
-            placeholder="https://mydrive/mystory.json" 
-            name="url" 
-            disabled="${storyStatus == "loading"}">
-        </div>          
+          <input
+            class="form-input"
+            type="url"
+            id="url-input"
+            placeholder="https://mydrive/mystory.json"
+            name="url"
+            disabled="${storyStatus == "loading"}"
+          />
+        </div>
         <div class="divider text-center" data-content="OR"></div>
         <div class="form-group">
           <label class="form-label" for="file-input">From a file</label>
-          <input 
-            class="form-input" 
-            type="file" 
-            id="file-input" 
+          <input
+            class="form-input"
+            type="file"
+            id="file-input"
             accept="application/json"
             name="file"
-            disabled="${storyStatus == "loading"}">
-        </div>  
-        <button class="btn btn-primary ${storyStatus == "loading" &&
-          "loading"}" type="submit">Ok</button>
+            disabled="${storyStatus == "loading"}"
+          />
+        </div>
+        <div class="button-container">
+          <button
+            class="btn btn-primary ${storyStatus == "loading" && "loading"}"
+            type="submit"
+            >Open</button
+          >
+          <button
+            class="btn btn-default"
+            type="button"
+            onclick="${onCreateStory}"
+            >Create</button
+          >
+        </div>
       </form>
-
-  `.define({ StErrorToast, SButton, SFormGroup })
+    `.define({ StErrorToast, SButton, SFormGroup })
 };
